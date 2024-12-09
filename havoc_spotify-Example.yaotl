@@ -1,0 +1,44 @@
+Teamserver {
+    Host = "127.0.0.1"
+    Port = "40056"
+
+    Build {
+        Compiler64 = "/usr/bin/x86_64-w64-mingw32-gcc"
+        Compiler86 = "/usr/bin/i686-w64-mingw32-gcc"
+        Nasm = "/usr/bin/nasm"
+    }
+}
+Operators {
+    user "User" {
+        Password = "password"
+    }
+}
+Listeners {
+    Http {
+        Name         = "Agent Listener - HTTP/s"
+        KillDate     = "2025-04-29 14:44:15"
+        WorkingHours = "0:00-23:59"
+        Hosts        = ["127.0.0.1", "0.0.0.0 "192.168.15.1"]
+        HostBind     = "0.0.0.0"
+        HostRotation = "round-robin"
+        PortBind     = 443
+        Secure       = true
+        UserAgent    = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+        Uris         = ["/v1/me/player/currently-playing", "/v1/me/player/recently-played"]
+        Headers      = ["Origin: https://www.spotify.com", "Referer: https://www.spotify.com", "Content-type: text/plain, charset=utf-8", "Accept-Language: en-US"]
+
+        Response {
+            Headers = ["Content-type: text/plain, charset=utf-8", "Access-Control-Allow-Origin: https://spotify.com", "Connection: keep-alive", "Cache-control: no-cache"]
+        }
+    }
+
+    Smb {
+        Name     = "Pivot - Smb"
+        PipeName = "Winsock2\\CatalogChangeListener-652-0"
+    }
+}
+
+Demon {
+    Sleep  = 58
+    Jitter = 5
+}
